@@ -1,0 +1,3 @@
+<div *ngIf="this.recipes | async as data" id="rec_results">
+  <span *ngFor="let i of data">{{i}}</span>
+</div>
