@@ -4,16 +4,16 @@
 <div *ngIf="this.ingredients | async as data" id="ing_results">
   <a
     *ngFor="let i of data"
-    id="query-res-{{i}}"
+    id="{{i}}"
     class="ing_found"
-    (click)="addIngredient(i);remove('query-res-' + i)"
-  >{{i}}</a>
+    (click)="addIngredient(i);remove(i)"
+  >{{i.name}}</a>
 </div>
 <ul id="ing_current" *ngIf="this.service.selectedIngredients | async as data">
   <li
     *ngFor="let i of data"
-    id="selected-{{i}}"
-  >{{i}}
+    id="{{i.id}}"
+  >{{i.name}}
     <button (click)="unselect(i)">X</button>
   </li>
 </ul>

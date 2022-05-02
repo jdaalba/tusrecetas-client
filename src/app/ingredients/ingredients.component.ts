@@ -3,6 +3,8 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
 import {IngredientService} from "../ingredient.service";
+import {ingredient} from "../classes/ingredient";
+import {result} from "../classes/result";
 
 @Component({
   selector: 'app-ingredients',
@@ -11,9 +13,9 @@ import {IngredientService} from "../ingredient.service";
 })
 export class IngredientsComponent implements OnInit {
 
-  private _ingredients: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  private _ingredients: BehaviorSubject<any[]> = new BehaviorSubject<ingredient[]>([]);
 
-  public readonly ingredients: Observable<string[]> = this._ingredients.asObservable();
+  public readonly ingredients: Observable<ingredient[]> = this._ingredients.asObservable();
 
   private readonly url: string = `http://localhost:8080/ingredients`;
 
@@ -29,20 +31,20 @@ export class IngredientsComponent implements OnInit {
       // @ts-ignore
       const hint = element.value;
       let url = this.url + (hint ? `?like=${hint}` : "");
-      this.http.get<any>(url)
+      this.http.get<result<ingredient>>(url)
       .pipe(map(o => o.data))
       .pipe(map(o => this.removeSelectedIngredients(o)))
       .subscribe(rs => this._ingredients.next(rs));
     }
   }
 
-  private removeSelectedIngredients(data: string[]): string[] {
-    let selIngs = this.service._selectedIngredients.getValue();
+  private removeSelectedIngredients(data: ingredient[]): ingredient[] {
+    let selIngs: ingredient[] = this.service._selectedIngredients.getValue();
     return data.filter(i => !selIngs.includes(i))
   }
 
-  addIngredient(ingredient: string): void {
-    const current = this.service._selectedIngredients.getValue();
+  addIngredient(ingredient: ingredient): void {
+    const current: ingredient[] = this.service._selectedIngredients.getValue();
     current.push(ingredient);
     this.service._selectedIngredients.next(current);
 
@@ -54,15 +56,15 @@ export class IngredientsComponent implements OnInit {
     this._ingredients.next([]);
   }
 
-  remove(id: string): void {
-    let node = document.getElementById(id);
+  remove(ingredient: ingredient): void {
+    let node = document.getElementById(ingredient.id);
     if (node) {
       node.remove()
     }
   }
 
-  unselect(ingredient: string): void {
+  unselect(ingredient: ingredient): void {
     const current = this.service._selectedIngredients.getValue();
-    this.service._selectedIngredients.next(current.filter(i => i != ingredient));
+    this.service._selectedIngredients.next(current.filter(i => i.id != ingredient.id));
   }
 }

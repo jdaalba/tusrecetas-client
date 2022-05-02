@@ -1,0 +1,13 @@
+.sel-ing-item {
+  background-color: green;
+  color: white;
+}
+.ing-item {
+  background-color: blue;
+  color: white;
+}
+.balloon {
+  padding: 3px;
+  margin: 1px;
+  border-radius: 10px;
+}
