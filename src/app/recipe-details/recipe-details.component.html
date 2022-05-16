@@ -1,2 +1,17 @@
-<p>recipe-details works!</p>
-<p>Recipe id: {{id}}</p>
+<div *ngIf="this._recipe | async as r">
+  <h2 class="pt-5">{{r.name}}</h2>
+  <div class="pt-5">
+    <h3 class="mb-5">Ingredientes</h3>
+    <div class="row">
+      <ul class="col-md-4 list-group list-group-flush">
+        <li *ngFor="let i of r.ingredients" class="list-group-item">{{i.name}}</li>
+      </ul>
+      <img class="col-md-8" src="assets/tortilla-de-patata.jpg"
+           alt="Foto del plato">
+    </div>
+  </div>
+  <div class="py-5">
+  <h3 class="pb-2">Elaboraci&oacute;n</h3>
+  <p *ngFor="let p of r.description.split('\n')">{{p}}</p>
+  </div>
+</div>

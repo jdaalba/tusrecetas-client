@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common";
+import {HttpClient} from "@angular/common/http";
+import {recipe} from "../classes/recipe";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-recipe-details',
@@ -9,19 +12,17 @@ import {Location} from "@angular/common";
 })
 export class RecipeDetailsComponent implements OnInit {
 
-  private id: Number = 69;
+  _recipe: Observable<recipe> = new Observable<recipe>();
 
   constructor(
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private http: HttpClient
   ) {
   }
 
   ngOnInit(): void {
-    this.getRecipe();
-  }
-
-  getRecipe(): void {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this._recipe = this.http.get<recipe>(`http://localhost:8080/recipes/${id}`)
   }
 }
