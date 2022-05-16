@@ -5,16 +5,20 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import { IngredientsComponent } from './ingredients/ingredients.component';
 import { RecipesComponent } from './recipes/recipes.component';
+import { AppRoutingModule } from './app-routing.module';
+import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IngredientsComponent,
-    RecipesComponent
+    RecipesComponent,
+    RecipeDetailsComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

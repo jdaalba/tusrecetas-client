@@ -1,6 +1,6 @@
 <ul *ngIf="this.recipes | async as data" id="rec_results">
   <li *ngFor="let r of data" id="{{r.id}}}">
-    <span>{{r.name}}</span>
+    <a routerLink="/recipes/{{r.id}}">{{r.name}}</a>
     <span *ngFor="let i of r.ingredients" class="balloon {{i._selected ? 'sel-' : ''}}ing-item">{{i.name}}</span>
   </li>
 </ul>
